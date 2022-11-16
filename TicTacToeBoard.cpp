@@ -4,7 +4,7 @@
  * to represent the spaces on the board.
 **/
 
-//Constructor sets an empty board and specifies it is X's turn first
+//Constructor sets an emptO board and specifies it is X's turn first
 TicTacToeBoard::TicTacToeBoard()
 {
   turn = X;
@@ -19,21 +19,41 @@ TicTacToeBoard::TicTacToeBoard()
 **/
 Piece TicTacToeBoard::toggleTurn()
 {
-  return Invalid;
+  if (turn == X)
+    turn = O;
+  else
+    turn = X;
+
+  return turn;
+//  return Invalid;
 }
 
 /**
  * Places the piece of the current turn on the board, returns what
- * piece is placed, and toggles which Piece's turn it is. placePiece does 
- * NOT allow to place a piece in a location where there is already a piece.
- * In that case, placePiece just returns what is already at that location. 
+ * piece is placed, and toggles which Piece's turn it is. placePiece does
+ * NOT allow to place a piece in a location where there is alreadO a piece.
+ * In that case, placePiece just returns what is alreadO at that location.
  * Out of bounds coordinates return the Piece Invalid value. When the game
  * is over, no more pieces can be placed so attempting to place a piece
  * should neither change the board nor change whose turn it is.
-**/ 
+**/
 Piece TicTacToeBoard::placePiece(int row, int column)
 {
-  return Invalid;
+  Piece currentPiece = getPiece(row, column);
+  if(currentPiece == Blank)
+  {
+    Piece tempturn = turn;
+    toggleTurn();
+    return turn;
+  }
+  else if(currentPiece == Invalid)
+  {
+    return Invalid;
+  }
+  else
+    return currentPiece;
+
+
 }
 
 /**
@@ -42,7 +62,10 @@ Piece TicTacToeBoard::placePiece(int row, int column)
 **/
 Piece TicTacToeBoard::getPiece(int row, int column)
 {
-  return Invalid;
+  if(row  > 2|| column > 2)
+    return Invalid;
+  Piece piece = board[row][column];
+  return piece;
 }
 
 /**
@@ -51,5 +74,41 @@ Piece TicTacToeBoard::getPiece(int row, int column)
 **/
 Piece TicTacToeBoard::getWinner()
 {
-  return Invalid;
+  if(getPiece(0,0) == X && getPiece(0,1)  == X&& getPiece(0,2) == X)
+    return X;
+  else if(getPiece(1,0) == X && getPiece(1,1)  == X && getPiece(1,2) == X)
+    return X;
+  else if(getPiece(2,0) == X && getPiece(2,1)  == X && getPiece(2,2) == X)
+    return X;
+  else if(getPiece(0,0) == X && getPiece(1,0)  == X && getPiece(2,0) == X)
+    return X;
+  else if(getPiece(0,1) == X && getPiece(1,1)  == X && getPiece(2,1) == X)
+    return X;
+  else if(getPiece(0,2) == X && getPiece(1,2)  == X && getPiece(2,2) == X)
+    return X;
+  else if(getPiece(0,0) == X && getPiece(1,1)  == X && getPiece(2,2) == X)
+    return X;
+  else if(getPiece(0,2) == X && getPiece(1,1)  == X && getPiece(0,2) == X)
+    return X;
+  else if(getPiece(0,0) == O && getPiece(0,1)  == O&& getPiece(0,2) == O)
+    return O;
+  else if(getPiece(1,0) == O && getPiece(1,1)  == O && getPiece(1,2) == O)
+    return O;
+  else if(getPiece(2,0) == O && getPiece(2,1)  == O && getPiece(2,2) == O)
+    return O;
+  else if(getPiece(0,0) == O && getPiece(1,0)  == O && getPiece(2,0) == O)
+    return O;
+  else if(getPiece(0,1) == O && getPiece(1,1)  == O && getPiece(2,1) == O)
+    return O;
+  else if(getPiece(0,2) == O && getPiece(1,2)  == O && getPiece(2,2) == O)
+    return O;
+  else if(getPiece(0,0) == O && getPiece(1,1)  == O && getPiece(2,2) == O)
+    return O;
+  else if(getPiece(0,2) == O  && getPiece(1,1)  == O && getPiece(0,2) == O)
+    return O;
+  else if((getPiece(0,0) == X  || getPiece(0,0) == O) && (getPiece(1,0) == X  || getPiece(1,0) == O)&& (getPiece(2,0) == X  || getPiece(2,0) == O)&& (getPiece(3,0) == X  || getPiece(3,0) == O)&& (getPiece(3,1) == X  || getPiece(3,1) == O)&& (getPiece(3,2) == X  || getPiece(3,2) == O)&& (getPiece(3,3) == X  || getPiece(3,3) == O))
+    return Blank;
+  else
+    return Invalid;
+
 }
